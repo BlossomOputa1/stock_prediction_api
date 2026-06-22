@@ -1,113 +1,38 @@
-# 📈 Stock Market Prediction API
+# 📈 TotalEnergies Stock Prediction API & Dashboard
 
-A production-ready, containerized Machine Learning API designed to predict stock market closing prices. Built with Python and FastAPI, this backend serves a Random Forest predictive model trained on historical market data. 
+A full-stack, production-ready Machine Learning ecosystem designed to predict the stock market closing prices for TotalEnergies on the Nigerian Exchange (NGX). 
 
-This project bridges the gap between Data Science and DevOps by automating the data pipeline, engineering financial features, and packaging the entire ecosystem into an isolated Docker container for seamless, reproducible deployment.
+This project bridges Data Science and MLOps by automating the data pipeline, containerizing the backend model, serving it via a REST API, and providing an interactive web dashboard for real-time predictions. The entire training lifecycle is fully automated using GitHub Actions.
 
-## 🚀 Features
-* **Automated Data Pipeline:** Fetches, cleans, and processes raw historical financial data.
-* **Feature Engineering:** Calculates key market indicators including Simple Moving Averages (SMA_7, SMA_21) and Lagging Close Prices.
-* **Machine Learning:** Utilizes a Scikit-Learn Random Forest model to predict next-day closing prices based on engineered time-series features.
-* **High-Performance API:** Serves predictions via a fast, asynchronous REST endpoint using FastAPI and Uvicorn.
-* **Containerized Infrastructure:** Fully containerized using Docker, ensuring exact environment replication and eliminating dependency mismatches.
+## 🚀 Key Features
+* **Interactive UI:** A sleek, user-friendly frontend built with Streamlit for instant stock predictions.
+* **High-Performance Backend:** A fast, asynchronous REST API built with FastAPI and Uvicorn to serve the Machine Learning model.
+* **Automated Data Pipeline:** Fetches, cleans, and engineers financial features (SMA_7, SMA_21, Lagging Close Prices) from raw historical market data.
+* **MLOps / Continuous Training (CT):** A GitHub Actions pipeline configured to automatically wake up every Friday at midnight, fetch the latest NGX market data, retrain the Scikit-Learn Random Forest model, and commit the updated weights back to the repository.
+* **Continuous Integration (CI):** Automated Docker build testing on every push to the `main` branch.
+* **Containerized Infrastructure:** The backend API and model are fully containerized using Docker, ensuring exact environment replication.
 
 ## 🛠️ Tech Stack
 * **Language:** Python 3.11
 * **Data Processing & ML:** Pandas, Scikit-Learn
 * **Backend Framework:** FastAPI, Uvicorn
-* **DevOps / Deployment:** Docker
+* **Frontend UI:** Streamlit
+* **DevOps & CI/CD:** Docker, GitHub Actions
 
 ## 📂 Project Structure
 ```text
 stock_prediction_api/
+├── .github/workflows/
+│   ├── ci.yml               # Automated Docker build testing
+│   └── retrain.yml          # Weekly automated model retraining pipeline
 ├── app/
-│   ├── main.py              # FastAPI application and routing
+│   ├── main.py              # FastAPI backend application
 │   └── stock_model.pkl      # Trained Scikit-Learn Random Forest model
 ├── data/                    # Raw and cleaned dataset storage
-├── notebooks/               # Jupyter notebooks for EDA and prototyping
+├── frontend.py              # Streamlit interactive web dashboard
 ├── clean_data.py            # Data cleaning script
 ├── engineer_features.py     # Feature engineering script
 ├── fetch_data.py            # Financial data extraction script
-├── train_model.py           # Model training and export script
-├── Dockerfile               # Docker image configuration
-└── requirements.txt         # Python package dependencies 
-
-
-```
-
-## 🐳 Running with Docker (Recommended)
-
-The easiest way to run this application is via Docker. Ensure the Docker engine is installed and running on your system.
-
-**1. Build the Docker Image**
-
-```bash
-docker build -t stock-predictor-api .
-
-```
-
-**2. Run the Container**
-
-```bash
-docker run -d -p 8000:8000 --name my-stock-api stock-predictor-api
-
-```
-
-**3. Access the API**
-Navigate to `http://localhost:8000/docs` in your web browser to access the interactive Swagger UI and test the `/predict` endpoint.
-
-## 💻 Running Locally (Without Docker)
-
-If you prefer to run the application directly on your local Ubuntu environment:
-
-**1. Create and activate a virtual environment:**
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-
-```
-
-**2. Install dependencies:**
-
-```bash
-pip install -r requirements.txt
-
-```
-
-**3. Start the Uvicorn server:**
-
-```bash
-uvicorn app.main:app --reload
-
-```
-
-## 📡 API Endpoints
-
-### `POST /predict`
-
-Accepts a JSON payload containing the engineered financial features and returns the predicted closing price.
-
-**Example Request Payload:**
-
-```json
-{
-  "SMA_7": 62.50,
-  "SMA_21": 61.10,
-  "Daily_Return": 0.015,
-  "Close_Lag_1": 63.00,
-  "Close_Lag_2": 62.00,
-  "Close_Lag_3": 62.10
-}
-
-```
-
-**Example Response:**
-
-```json
-{
-  "status": "success",
-  "prediction_next_close_price": 63.13
-}
-
-```
+├── train_model.py           # Model training script
+├── Dockerfile               # Docker image configuration for the backend
+└── requirements.txt         # Python package dependencies
