@@ -1,8 +1,3 @@
-Here is your updated, professional `README.md`. It now perfectly reflects the complete MLOps architecture you built, including the new Streamlit frontend UI and your automated GitHub Actions pipelines.
-
-You can copy this entire block and paste it right over the old text in your `README.md` file.
-
-```markdown
 # 📈 TotalEnergies Stock Prediction API & Dashboard
 
 A full-stack, production-ready Machine Learning ecosystem designed to predict the stock market closing prices for TotalEnergies on the Nigerian Exchange (NGX). 
@@ -41,7 +36,6 @@ stock_prediction_api/
 ├── train_model.py           # Model training script
 ├── Dockerfile               # Docker image configuration for the backend
 └── requirements.txt         # Python package dependencies
-
 ```
 
 ## 💻 How to Run the Application
