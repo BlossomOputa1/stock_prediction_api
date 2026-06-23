@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # Container 1: The FastAPI Backend
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    container_name: stock_api
+
+  # Container 2: The Streamlit Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "8501:8501"
+    container_name: stock_frontend
+    depends_on:
+      - api # This tells Docker to start the backend before the frontend

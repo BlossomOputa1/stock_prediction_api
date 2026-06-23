@@ -32,7 +32,7 @@ if st.button("Predict Next Close Price", type="primary"):
     }
 
     # 2. Send the data to your running FastAPI Docker container
-    api_url = "http://localhost:8000/predict"
+    api_url = "http://api:8000/predict"
 
     try:
         response = requests.post(api_url, json=payload)
