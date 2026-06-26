@@ -46,6 +46,6 @@ if __name__ == "__main__":
     fetch_stock_data(TICKER_TTE, START, END, FILE_PATH_TTE)
 
     # 2. Fetch Nigerian Market Proxy (MSCI Nigeria ETF)
-    TICKER_ASI = "NGE"
+    TICKER_ASI = "AFK"
     FILE_PATH_ASI = os.path.join("data", "asi_raw.csv")
     fetch_stock_data(TICKER_ASI, START, END, FILE_PATH_ASI)
