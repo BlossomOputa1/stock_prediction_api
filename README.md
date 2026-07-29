@@ -72,7 +72,7 @@ This repository utilizes **GitHub Actions** to automate the machine learning lif
 
 ## 👤 Author
 
-**Blossom**
-*   LinkedIn: (https://linkedin.com/in/chidera-oputa).
+**Blossom Oputa**
+*   LinkedIn: https://linkedin.com/in/chidera-oputa
 *   GitHub: [@BlossomOputa1](https://github.com/BlossomOputa1)
-*   Personal website : (https://blossoms-portfolio.netlify.app)
+*   Personal website : https://blossoms-portfolio.netlify.app
