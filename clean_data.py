@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 import os
 
 # python script to clean the raw_tte_stock.csv
@@ -23,13 +24,25 @@ def clean_data(input_path , output_path):
         df = df.ffill()
         print("For the missing values have been handled using forward fill (ffill).")
 
+    duplicate_count = df.duplicated().sum()
+    print(f" Found {duplicate_count} duplicate rows in the dataset.")
+    if duplicate_count > 0:
+        df = df.drop_duplicates()
+        print(f"Found and removed {duplicate_count} duplicate rows.")
+        print(df.columns)
 
-     #now to save the clean dataset
+    #now to save the clean dataset
     df.to_csv(output_path, index=False)
     print(f"Cleaned data successfully saved to {output_path}. ")
     print("\nSample of clean data:")
     print(df.head())
-
+    print(df.describe())
+    plt.figure(figsize = (10,5))
+    plt.scatter(df["Date"],df["Volume"])
+    plt.title("Volume over time")
+    plt.xlabel("Date")
+    plt.ylabel("Volume")
+    plt.show()
 if __name__ == "__main__":
     # collecting the raw dataset from the data folder
     RAW_PATH = os.path.join("data", "raw_tte_stock.csv")

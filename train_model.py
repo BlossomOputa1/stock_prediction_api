@@ -2,7 +2,8 @@ import joblib
 import pandas as pd
 import os
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_absolute_error,mean_squared_error,r2_score
+import numpy as np
 
 
 def train_predictive_model(data_path, model_path):
@@ -12,7 +13,7 @@ def train_predictive_model(data_path, model_path):
     #Define Features (X) and Target(Y)
     features = ['SMA_7', 'SMA_21', 'Daily_Return', 'Close_Lag_1', 'Close_Lag_2', 'Close_Lag_3']
     X = df[features]
-    y = df['Target_Next_Close']
+    y = df['Target_Next_Return']
 
     # Chronological Split (80% Train, 20% test)
     # We cannot shuffle time-series data, so we slice it sequentially
@@ -26,14 +27,29 @@ def train_predictive_model(data_path, model_path):
     # A random forest builds 100 decision trees and averages their predictions
     model = RandomForestRegressor(n_estimators=100, random_state=42)
     model.fit(X_train, y_train)
-
+    
     #evaluate the model
     predictions = model.predict(X_test)
     mae = mean_absolute_error(y_test, predictions)
-
+    rmse = np.sqrt(mean_squared_error(y_test,predictions))
+    r2 = r2_score(y_test,predictions)
+    # Comparing the actual test values to the predicted values
+    comparison = pd.DataFrame({
+            "Actual":y_test.values[:10],
+            "Predicted":predictions[:10]
+        })
+    print(comparison)
+    print(f"mean of actual test prices:{y_test.mean():.2f}")
+    print(f"mean of actual predicted prices:{predictions.mean():.2f}")
+    
     print("\n ------- Model Evaluation --------")
     print(f"MAE: {mae:.2f}")
+    print(f"Rmse: {rmse:.2f}")
+    print(f"R2_SCORE: {r2:.2f}")
     print("This means on average, our predicted stock price is off by this many units")
+    
+    direction_correct = ((y_test > 0)==(predictions > 0)).mean()
+    print(f"Direction Accuracy:{direction_correct * 100:.2f}%")
 
     #save the trained model for the backend
     joblib.dump(model, model_path)

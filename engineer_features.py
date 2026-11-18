@@ -38,7 +38,7 @@ def engineer_features(input_path, asi_path, output_path):
     df['Close_Lag_3'] = df['Close'].shift(3)
 
     # Target Variable
-    df['Target_Next_Close'] = df['Close'].shift(-1)
+    df['Target_Next_Return'] = df['Close'].pct_change(5).shift(-1)
 
     # Drop the boundary rows
     df_cleaned = df.dropna().copy()
@@ -50,7 +50,7 @@ def engineer_features(input_path, asi_path, output_path):
     
     # Show the very last 3 rows to verify the dates are up to date!
     print("\nSample of your new features (last 3 rows):")
-    print(df_cleaned[['Date', 'Close', 'SMA_7', 'ASI_Daily_Return', 'Target_Next_Close']].tail(3))
+    print(df_cleaned[['Date', 'Close', 'SMA_7', 'ASI_Daily_Return', 'Target_Next_Return']].tail(3))
 
 if __name__ == "__main__":
     CLEAN_PATH = os.path.join("data", "total_raw.csv")

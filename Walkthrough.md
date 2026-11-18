@@ -52,7 +52,7 @@ Raw closing prices are not enough for a quantitative model. This script merges t
 
 We use a **Scikit-Learn Random Forest Regressor** to find complex, non-linear relationships in the financial data.
 
-* The script isolates the engineered features (inputs) and the `Target_Next_Close` (the output we want to predict).
+* The script isolates the engineered features (inputs) and the `Target_Next_Return` (the output we want to predict).
 * It trains the decision trees to recognize patterns—such as how TTE reacts when its 7-day average crosses its 21-day average during a highly positive macroeconomic day.
 * **Output:** A serialized `stock_model.pkl` file, which serves as the "brain" of our backend.
 
